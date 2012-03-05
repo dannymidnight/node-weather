@@ -1,27 +1,29 @@
 var http = require('http'),
 	xml2js = require('xml2js');
 
-
 /**
- * Get the the weather based on WOEID.
+ * Get the Yahoo weather based on geolocation.
  */
-var weather = function(woeid, callback) {
-	var options = {
-		host: 'weather.yahooapis.com',
-		path: '/forecastrss?w='+woeid+'&u=c'
-	};
+module.exports = function(geo, callback) {
 
-	http.get(options, function(res) {
-		var data = '';
-		res.on("data", function(chunk) {
-			data += chunk;
-		});
+	where(geo, function(weoid) {
+		var options = {
+			host: 'weather.yahooapis.com',
+			path: '/forecastrss?w='+woeid+'&u=c'
+		};
 
-		res.on('end', function() {
-			var parser = new xml2js.Parser();
-			parser.parseString(data, function (err, result) {
-				var temp = result.channel.item['yweather:condition']['@'].temp;
-				callback(temp);
+		http.get(options, function(res) {
+			var data = '';
+			res.on("data", function(chunk) {
+				data += chunk;
+			});
+
+			res.on('end', function() {
+				var parser = new xml2js.Parser();
+				parser.parseString(data, function (err, result) {
+					var temp = result.channel.item['yweather:condition']['@'].temp;
+					callback(temp);
+				});
 			});
 		});
 	});
