@@ -1,6 +1,5 @@
-var http = require('http'),
-	xml2js = require('xml2js'),
-	request = require('weather');
+var xml2js = require('xml2js'),
+	request = require('request');
 
 module.exports = function(geo, callback) {
 	yahoo.where(geo, function(woeid) {
@@ -14,15 +13,11 @@ var yahoo = {};
  * Get the Yahoo weather based on geolocation.
  */
 yahoo.weather = function(woeid, callback) {
-	var options = {
-		host: 'weather.yahooapis.com',
-		path: '/forecastrss?w='+woeid+'&u=c'
-	};
-
 	var url = 'http://weather.yahooapis.com/forecastrss?w='+woeid+'&u=c';
+
 	request(url, function(error, res, body) {
 		var parser = new xml2js.Parser();
-		parser.parseString(data, function (err, result) {
+		parser.parseString(body, function (err, result) {
 			var temp = result.channel.item['yweather:condition']['@'].temp;
 			callback(temp);
 		});
@@ -33,21 +28,11 @@ yahoo.weather = function(woeid, callback) {
  * Get yahoo location base on geolocation.
  */
 yahoo.where = function(geo, callback) {
-	var options = {
-		host: 'where.yahooapis.com',
-		path: '/geocode?location='+geo.lat+','+geo.long+'&flags=J&gflags=R'
-	};
+	var url = 'http://where.yahooapis.com/geocode?location='+geo.lat+','+geo.long+'&flags=J&gflags=R';
 
-	http.get(options, function(res) {
-		var data = '';
-		res.on("data", function(chunk) {
-			data += chunk;
-		});
-
-		res.on('end', function() {
-			data = JSON.parse(data);
-			if (data.ResultSet.Found)
-				callback(data.ResultSet.Results[0].woeid);
-		});
+	request({url:url, json:true}, function(error, res, body) {
+		var result = body.ResultSet;
+		if (result.Found)
+			callback(result.Results[0].woeid);
 	});
 };
