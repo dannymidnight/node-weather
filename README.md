@@ -1,5 +1,4 @@
- ## Example ##
- An example of how to get the weather based on geolocation.
+An example of how to get the weather based on geolocation.
  
 ```javascript
  var weather = require('weather');
