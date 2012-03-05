@@ -18,8 +18,8 @@ yahoo.weather = function(woeid, callback) {
 	request(url, function(error, res, body) {
 		var parser = new xml2js.Parser();
 		parser.parseString(body, function (err, result) {
-			var temp = result.channel.item['yweather:condition']['@'].temp;
-			callback(temp);
+			var weather = result.channel.item['yweather:condition']['@'];
+			callback(weather);
 		});
 	});
 };
