@@ -1,15 +1,15 @@
 var http = require('http'),
-	xml2js = require('xml2js');
+		xml2js = require('xml2js'),
+		request = require('weather');
 
 /**
  * Get the Yahoo weather based on geolocation.
  */
 module.exports = function(geo, callback) {
-
-	where(geo, function(weoid) {
+	where(geo, function(woeid) {
 		var options = {
-			host: 'weather.yahooapis.com',
-			path: '/forecastrss?w='+woeid+'&u=c'
+				host: 'weather.yahooapis.com',
+				path: '/forecastrss?w='+woeid+'&u=c'
 		};
 
 		http.get(options, function(res) {
@@ -32,10 +32,10 @@ module.exports = function(geo, callback) {
 /**
  * Get yahoo location base on geolocation.
  */
-var where = function(geo, callback) {
+where = function(geo, callback) {
 	var options = {
-		host: 'where.yahooapis.com',
-		path: '/geocode?location='+geo.lat+','+geo.long+'&flags=J&gflags=R'
+			host: 'where.yahooapis.com',
+			path: '/geocode?location='+geo.lat+','+geo.long+'&flags=J&gflags=R'
 	};
 
 	http.get(options, function(res) {
