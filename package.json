@@ -1,0 +1,12 @@
+{
+	"name": "weather",
+	"description": "Geolocation weather api using Yahoo",
+	"author": "Chris Campbell <chris@harto.org>",
+	"version": "0.0.1",
+	"dependencies": {
+		"xml2js": "0.1.13"
+	},
+	"engines": { "node": ">= 0.4.7" },
+	"repository": "git://github.com/dannymidnight/node-weather",
+	"main": "yahoo"
+}
