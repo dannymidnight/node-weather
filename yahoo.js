@@ -33,13 +33,25 @@ yahoo.weather = function(woeid, callback) {
 
 	request(url, function(error, res, body) {
 		var parser = new xml2js.Parser();
-		parser.parseString(body, function (err, result) {			
+		parser.parseString(body, function (err, result) {
+			var weather = {},
+				high = /(?:High:\s)(\d+)/g,
+				low = /(?:Low:\s)(\d+)/g;
+
 			try {
-				var weather = result.channel.item['yweather:condition']['@'];
+				// Get the current temp
+				var condition = result.channel.item['yweather:condition']['@'];
+				weather = condition;
+
+				// Get the high/low currently stored in Yahoo widget.
+				var description = result.channel.item['description'];
+				weather.high = high.exec(description)[1];
+				weather.low = low.exec(description)[1];
 			} catch(e) {
 				onError('Failed to find weather');
 				return;
 			}
+
 			callback(weather);
 		});
 	});
