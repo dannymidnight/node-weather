@@ -35,8 +35,8 @@ yahoo.weather = function(woeid, callback) {
 		var parser = new xml2js.Parser();
 		parser.parseString(body, function (err, result) {
 			var weather = {},
-				high = /(?:High:\s)(\d+)/g,
-				low = /(?:Low:\s)(\d+)/g;
+				high = /(?:High:\s)(-?\d+)/g,
+				low = /(?:Low:\s)(-?\d+)/g;
 
 			try {
 				// Get the current temp
