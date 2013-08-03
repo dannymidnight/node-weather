@@ -18,3 +18,6 @@ An example of how to get the weather based on geolocation.
  	low: 9,		// Low for the day
  }
 ```
+
+## Licence
+Licensed under the MIT License
