@@ -52,6 +52,13 @@ yahoo.weather = function(woeid, callback) {
         var description = result.channel.item['description'];
         weather.high = high.exec(description)[1];
         weather.low = low.exec(description)[1];
+
+        weather.forecast = [];
+
+        result.channel.item['yweather:forecast'].forEach(function (item) {
+          weather.forecast.push(item['@']);
+        });
+
       } catch(e) {
         onError('Failed to find weather');
         return;
