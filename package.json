@@ -15,6 +15,6 @@
   "engines": {
     "node": ">= 0.4.7"
   },
-  "repository": "git://github.com/jozzhart/node-weather",
+  "repository": "git://github.com/dannymidnight/node-weather",
   "main": "yahoo"
 }
