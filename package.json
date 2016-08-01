@@ -1,0 +1,20 @@
+{
+  "name": "weather",
+  "description": "Yahoo weather API wrapper for node",
+  "tags": [
+    "weather",
+    "yahoo",
+    "geolocation"
+  ],
+  "author": "Chris Campbell <chris@harto.org>",
+  "version": "0.1.0",
+  "dependencies": {
+    "xml2js": "0.1.13",
+    "request": "2.9.153"
+  },
+  "engines": {
+    "node": ">= 0.4.7"
+  },
+  "repository": "git://github.com/dannymidnight/node-weather",
+  "main": "yahoo"
+}
